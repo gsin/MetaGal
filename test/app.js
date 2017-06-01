@@ -41,6 +41,15 @@ describe('GET /contact', () => {
   });
 });
 
+describe('GET /gallery', () => {
+  it('should return 200 OK', (done) => {
+    request(app)
+      .get('/gallery')
+      .expect(200, done);
+  });
+});
+
+
 describe('GET /random-url', () => {
   it('should return 404', (done) => {
     request(app)
