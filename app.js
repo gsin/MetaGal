@@ -25,7 +25,8 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.example' });
+//dotenv.load({ path: '.env.example' });
+dotenv.load({ path: '.env.dev' });
 
 /**
  * Controllers (route handlers).
@@ -135,6 +136,10 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
+
+
+
+
 /**
  * API examples routes.
  */
@@ -220,6 +225,17 @@ app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRed
  * Error Handler.
  */
 app.use(errorHandler());
+
+
+/**
+* Node-Gallery plugin
+*/
+app.use('/gallery', require('node-gallery')({
+  staticFiles : 'resources/photos',
+  urlRoot : 'gallery', 
+  title : 'Site Gallery'
+}));
+
 
 /**
  * Start Express server.
